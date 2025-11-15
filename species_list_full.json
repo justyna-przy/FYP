@@ -1,0 +1,46 @@
+[
+  {
+    "common_name": "European Robin",
+    "sci_name": "Erithacus rubecula"
+  },
+  {
+    "common_name": "Eurasian Wren",
+    "sci_name": "Troglodytes troglodytes"
+  },
+  {
+    "common_name": "Black-headed Gull",
+    "sci_name": "Chroicocephalus ridibundus"
+  },
+  {
+    "common_name": "Common Swift",
+    "sci_name": "Apus apus"
+  },
+  { 
+    "common_name": "Alpine Swift", 
+    "sci_name": "Tachymarptis melba" 
+  },
+  {
+    "common_name": "Common Cuckoo",
+    "sci_name": "Cuculus canorus"
+  },
+  {
+    "common_name": "Rock Dove",
+    "sci_name": "Columba livia"
+  },
+  {
+    "common_name": "Stock Dove",
+    "sci_name": "Columba oenas"
+  },
+  {
+    "common_name": "Common Wood Pigeon",
+    "sci_name": "Columba palumbus"
+  },
+  {
+    "common_name": "Eurasian Collared Dove",
+    "sci_name": "Streptopelia decaocto"
+  },
+  {
+    "common_name": "European Turtle Dove",
+    "sci_name": "Streptopelia turtur"
+  }
+]
