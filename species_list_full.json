@@ -12,6 +12,10 @@
     "sci_name": "Chroicocephalus ridibundus"
   },
   {
+    "common_name": "Common Pheasant",
+    "sci_name": "Phasianus colchicus"
+  },
+  {
     "common_name": "Common Swift",
     "sci_name": "Apus apus"
   },
@@ -42,5 +46,166 @@
   {
     "common_name": "European Turtle Dove",
     "sci_name": "Streptopelia turtur"
+  },
+  {
+    "common_name": "Eurasian Sparrowhawk",
+    "sci_name": "Accipiter nisus"
+  },
+  {
+    "common_name": "Western Marsh Harrier",
+    "sci_name": "Circus aeruginosus"
+  },
+  {
+    "common_name": "Hen Harrier",
+    "sci_name": "Circus cyaneus"
+  },
+  {
+    "common_name": "Northern Harrier",
+    "sci_name": "Circus hudsonius"
+  },
+  {
+    "common_name": "Montagu's Harrier",
+    "sci_name": "Circus pygargus"
+  },
+  {
+    "common_name": "Red Kite",
+    "sci_name": "Milvus milvus"
+  },
+  {
+    "common_name": "Black Kite",
+    "sci_name": "Milvus migrans"
+  },
+  {
+    "common_name": "White-tailed Eagle",
+    "sci_name": "Haliaeetus albicilla"
+  },
+  {
+    "common_name": "Common Buzzard",
+    "sci_name": "Buteo buteo"
+  },
+  {
+    "common_name": "Western Barn Owl",
+    "sci_name": "Tyto alba"
+  },
+  {
+    "common_name": "Long-eared Owl",
+    "sci_name": "Asio otus" 
+  },
+  {
+    "common_name": "Short-eared Owl",
+    "sci_name": "Asio flammeus"
+  },
+  {
+    "common_name": "Common Hoopoe",
+    "sci_name": "Upupa epops"
+  },
+  {
+    "common_name": "European Bee-eater",
+    "sci_name": "Merops apiaster"
+  },
+  {
+    "common_name": "Common Kingfisher",
+    "sci_name": "Alcedo atthis"
+  },
+  {
+    "common_name": "Eurasian Wryneck",
+    "sci_name": "Jynx torquilla"
+  },
+  {
+    "common_name": "Great Spotted Woodpecker",
+    "sci_name": "Dendrocopos major"
+  },
+  {
+    "common_name": "Common Kestrel",
+    "sci_name": "Falco tinnunculus"
+  },
+  {
+    "common_name": "Merlin",
+    "sci_name": "Falco columbarius"
+  },
+  {
+    "common_name": "Eurasian Hobby",
+    "sci_name": "Falco subbuteo"
+  },
+  {
+    "common_name": "Peregrine Falcon",
+    "sci_name": "Falco peregrinus"
+  },
+  {
+    "common_name": "Red-backed Shrike",
+    "sci_name": "Lanius collurio"
+  },
+  {
+    "common_name": "Woodchat Shrike",
+    "sci_name": "Lanius senator"
+  },
+  {
+    "common_name": "Red-eyed Vireo",
+    "sci_name": "Vireo olivaceus"
+  },
+  {
+    "common_name": "Eurasian Jay",
+    "sci_name": "Garrulus glandarius"
+  },
+  {
+    "common_name": "Eurasian Magpie",
+    "sci_name": "Pica pica"
+  },
+  { 
+    "common_name": "Red-billed Chough", 
+    "sci_name": "Pyrrhocorax pyrrhocorax"
+  },
+  {
+    "common_name": "Eurasian Jackdaw",
+    "sci_name": "Corvus monedula"
+  },
+  {
+    "common_name": "House Crow",
+    "sci_name": "Corvus splendens"
+  },
+  {
+    "common_name": "Rook",
+    "sci_name": "Corvus frugilegus"
+  },
+  {
+    "common_name": "Carrion Crow",
+    "sci_name": "Corvus corone"
+  },
+  {
+    "common_name": "Hooded Crow",
+    "sci_name": "Corvus cornix"
+  },
+  {
+    "common_name": "Common Raven",
+    "sci_name": "Corvus corax"
+  },
+  {
+    "common_name": "Bohemian Waxwing",
+    "sci_name": "Bombycilla garrulus"
+  },
+  {
+    "common_name": "Coal Tit",
+    "sci_name": "Periparus ater"
+  },
+  {
+    "common_name": "Eurasian Blue Tit",
+    "sci_name": "Cyanistes caeruleus"
+  }, 
+  {
+    "common_name": "Great Tit",
+    "sci_name": "Parus major"
+  },
+  {
+    "common_name": "Eurasian Penduline Tit",
+    "sci_name": "Remiz pendulinus"
+  },
+  {
+    "common_name": "Eurasian Skylark",
+    "sci_name": "Alauda arvensis"
+  },
+  {
+    "common_name": "Greater Short-toed Lark",
+    "sci_name": "Calandrella brachydactyla"
   }
+
 ]
