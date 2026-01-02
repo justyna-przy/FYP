@@ -35,3 +35,8 @@
     - Maybe just capture the highest energy 5s chunk from each audio file? Less data but more chance it captures the important part of the calls?
     - Actually what if I use a bigger model, and on each 3s clip, keep the ones that the model can correctly classify (up to certain confidence)
     - Many of these paper models are very good at classifying, but I am pretty sure they are doing it in controlled environments. My model needs to be able to classify bird calls well, and in real time. DuSAFNet seems to have a very good check for detecting calls vs silence, but idk if it is practical for my stuff.
+
+# Bird@Edge Notes
+- The ESP32 microphone stuff will be useful for my project. I can do the same thing with the ESP32 I stole from ISE.
+- Take a look at BirdNetLite
+- Does not mention data much
