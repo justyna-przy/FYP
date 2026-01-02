@@ -14,3 +14,24 @@
 - "The New World warblers are a group of small, often colourful, passerine birds restricted to the New World." 
     - What is the new world?!!! Is this Agartha?? 
 - https://xeno-canto.org/1045711 This one goes really hard
+
+
+
+# Thoughts
+- How am I going to check if there is a bird? 
+    - Do I have the 50 bird classes + unknown / not bird
+    - Or do I have an inital model that checks if bird or not? 
+    Flow would be:
+    - Convert audio buffer to spectrogram
+    - Pass spectrogram to init model
+    - If bird: pass to classification model
+    - Else: drop it? 
+    - Init model version would be a lot of extra work.. and I'm not sure how to run two models on the MAX78000. 
+    - Maybe use two MAX78000's? Or one 78000 and one 78002?
+    - One model would be more simple, but I would need data for birds + data for unknown/not bird
+
+- "Long recordings were split into 5 s chunks, and only the chunks containing bird sounds were kept for training"
+    - How on earth did they do that? 
+    - Maybe just capture the highest energy 5s chunk from each audio file? Less data but more chance it captures the important part of the calls?
+    - Actually what if I use a bigger model, and on each 3s clip, keep the ones that the model can correctly classify (up to certain confidence)
+    - Many of these paper models are very good at classifying, but I am pretty sure they are doing it in controlled environments. My model needs to be able to classify bird calls well, and in real time. DuSAFNet seems to have a very good check for detecting calls vs silence, but idk if it is practical for my stuff.
