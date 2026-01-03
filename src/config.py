@@ -21,10 +21,7 @@ class XenoCantoConfig:
         default_factory=lambda: [
             "United Kingdom", "Ireland", "France", "Germany", "Spain", "Portugal",
             "Italy", "Netherlands", "Belgium", "Switzerland", "Austria", "Denmark",
-            "Sweden", "Norway", "Finland", "Poland", "Czech Republic", "Slovakia",
-            "Hungary", "Greece", "Romania", "Bulgaria", "Croatia", "Slovenia",
-            "Estonia", "Latvia", "Lithuania", "Luxembourg", "Liechtenstein",
-            "Iceland", "Malta"
+            "Sweden", "Norway", "Finland", "Poland", 
         ]
     )
 

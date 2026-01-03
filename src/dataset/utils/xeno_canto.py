@@ -10,7 +10,8 @@ import time
 from dotenv import load_dotenv
 import requests
 
-from ...config import CONFIG
+from src.config import CONFIG
+
 
 load_dotenv()
 XENO_CANTO_API_KEY = os.environ.get("XENO_CANTO_API_KEY")
@@ -171,9 +172,28 @@ def read_manifest_csv(path: Union[Path, str]) -> List[ManifestEntry]:
         return [dict(row) for row in reader]  
 
 
+def filter_recordings_to_config(recordings: List[Recording]) -> List[Recording]:
+    xc = CONFIG.xeno_canto
+    allowed_countries = set(xc.countries)
+
+    out: List[Recording] = []
+    for r in recordings:
+        country = (r.get("cnt") or "").strip()
+
+        if country and country not in allowed_countries:
+            continue
+
+        out.append(r)
+
+    return out
+
+
 def write_raw_manifest_for_species(sci_name: str, query: str, manifest_dir: Union[Path, str], per_page: int = 500,) -> Path:
     """Fetch metadata and write raw manifest file for each species"""
+    
     recs = fetch_recordings(query, per_page=per_page)
+    recs = filter_recordings_to_config(recs)
+    
     entries = [recording_to_manifest_entry(r, local_path="") for r in recs]
     out_path = manifest_path(manifest_dir, sci_name)  # no suffix = raw
     write_manifest_csv(entries, out_path)
