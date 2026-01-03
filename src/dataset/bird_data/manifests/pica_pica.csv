@@ -115,6 +115,7 @@ xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,met
 144944,Pica pica,Eurasian Magpie,Marco Dragonetti,Italy,2013-03-15,17:00,8,A,call,field recording,yes,[],48000,https://xeno-canto.org/144944,https://xeno-canto.org/144944/download,
 118509,Pica pica,Eurasian Magpie,Marco Dragonetti,Italy,2012-01-17,07:30,25,A,call,field recording,yes,[],48000,https://xeno-canto.org/118509,https://xeno-canto.org/118509/download,
 112399,Pica pica,Eurasian Magpie,Jarek Matusiak,Poland,2012-06-28,11:00,23,A,"call, call im",field recording,unknown,[],44100,https://xeno-canto.org/112399,https://xeno-canto.org/112399/download,
+1070467,Pica pica,Eurasian Magpie,Colm Philpott,Ireland,2026-01-03,11:30,19,B,uncertain,field recording,no,[],44100,https://xeno-canto.org/1070467,https://xeno-canto.org/1070467/download,
 1065571,Pica pica,Eurasian Magpie,João Tomás,Portugal,2025-12-14,8:40,51,B,call,field recording,yes,"[""Corvus corone"", ""Troglodytes troglodytes"", ""Phylloscopus collybita"", ""Passer montanus""]",44100,https://xeno-canto.org/1065571,https://xeno-canto.org/1065571/download,
 1063777,Pica pica,Eurasian Magpie,Nelson Conceição,Portugal,2025-10-11,18:10,10,B,alarm call,field recording,yes,"[""Estrilda astrild""]",48000,https://xeno-canto.org/1063777,https://xeno-canto.org/1063777/download,
 1060301,Pica pica,Eurasian Magpie,Filippo Ceccolini,Italy,2025-11-29,07:30,8,B,call,field recording,yes,[],48000,https://xeno-canto.org/1060301,https://xeno-canto.org/1060301/download,
