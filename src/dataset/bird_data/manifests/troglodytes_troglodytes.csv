@@ -1,0 +1,3 @@
+xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,method,animal_seen,also,sampling_rate,xc_url,file_url,local_path
+1044258,Troglodytes troglodytes,Eurasian Wren,David Darrell-Lambert,United Kingdom,2025-09-30,11:00,58,A,alarm call,field recording,yes,[],48000,https://xeno-canto.org/1044258,https://xeno-canto.org/1044258/download,bird_data\raw\troglodytes_troglodytes\XC1044258.wav
+1043082,Troglodytes troglodytes,Eurasian Wren,Lars Edenius,Sweden,2025-09-25,09:30,12,A,call,field recording,no,[],44100,https://xeno-canto.org/1043082,https://xeno-canto.org/1043082/download,bird_data\raw\troglodytes_troglodytes\XC1043082.mp3

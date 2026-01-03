@@ -18,6 +18,26 @@ XENO_CANTO_API_KEY = os.environ.get("XENO_CANTO_API_KEY")
 Recording = Dict[str, Any]
 ManifestEntry = Dict[str, Any]
 
+MANIFEST_COLUMNS = [
+    "xc_id",
+    "sci_name",
+    "common_name",
+    "recordist",
+    "country",
+    "date",
+    "time",
+    "length_s",
+    "quality",
+    "type",
+    "method",
+    "animal_seen",
+    "also",
+    "sampling_rate",
+    "xc_url",
+    "file_url",
+    "local_path",
+]
+
 
 def _get_with_retry(
     url: str,
@@ -50,6 +70,7 @@ def get_recordings_data_for_species(
 ) -> List[Recording]:
     if ":" not in query:
         query = f'sp:"{query}"'
+    query = query.replace("+", " ")
 
     all_recordings: List[Recording] = []
     page = 1
@@ -76,41 +97,65 @@ def get_recordings_data_for_species(
     return all_recordings
 
 
+def _length_to_seconds(length_str: Optional[str]) -> Optional[int]:
+    if not length_str or ":" not in length_str:
+        return None
+    parts = length_str.split(":")
+    try:
+        parts_int = list(map(int, parts))
+    except ValueError:
+        return None
+    if len(parts_int) == 2:
+        minutes, seconds = parts_int
+        return minutes * 60 + seconds
+    if len(parts_int) == 3:
+        hours, minutes, seconds = parts_int
+        return hours * 3600 + minutes * 60 + seconds
+    return None
+
+
 def _manifest_entry(recording: Recording, local_path: Path, file_url: str) -> ManifestEntry:
     gen = recording.get("gen")
     sp = recording.get("sp")
     sci_name = f"{gen} {sp}".strip() if gen and sp else None
+    length_str = recording.get("length")
+    length_s = _length_to_seconds(length_str) if isinstance(length_str, str) else None
+    xc_id = str(recording.get("id") or "").strip()
+    xc_url = f"https://xeno-canto.org/{xc_id}" if xc_id else ""
+
+    sampling_rate = recording.get("smp")
+    if isinstance(sampling_rate, str) and sampling_rate.isdigit():
+        sampling_rate = int(sampling_rate)
 
     return {
-        "xc_id": str(recording.get("id") or ""),
+        "xc_id": xc_id,
         "sci_name": sci_name,
         "common_name": recording.get("en"),
+        "recordist": recording.get("rec"),
         "country": recording.get("cnt"),
+        "date": recording.get("date"),
+        "time": recording.get("time"),
+        "length_s": length_s,
         "quality": recording.get("q"),
-        "length": recording.get("length"),
-        "recording_type": recording.get("type"),
-        "license_url": recording.get("lic"),
+        "type": recording.get("type"),
+        "method": recording.get("method"),
+        "animal_seen": recording.get("animal-seen"),
+        "also": json.dumps(recording.get("also", [])),
+        "sampling_rate": sampling_rate,
+        "xc_url": xc_url,
         "file_url": file_url,
         "local_path": str(local_path),
     }
 
 
-def _write_manifest_json(entries: List[ManifestEntry], manifest_path: Union[Path, str]) -> None:
-    manifest_path = Path(manifest_path)
-    manifest_path.parent.mkdir(parents=True, exist_ok=True)
-    manifest_path.write_text(json.dumps(entries, indent=2), encoding="utf-8")
-
-
 def _write_manifest_csv(entries: List[ManifestEntry], manifest_path: Union[Path, str]) -> None:
     manifest_path = Path(manifest_path)
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
-    if not entries:
-        manifest_path.write_text("", encoding="utf-8")
-        return
     with manifest_path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=list(entries[0].keys()))
+        writer = csv.DictWriter(f, fieldnames=MANIFEST_COLUMNS)
         writer.writeheader()
-        writer.writerows(entries)
+        if entries:
+            writer.writerows(entries)
 
 
 def download_recording(
@@ -158,7 +203,6 @@ def download_recordings(
     output_dir: Union[Path, str],
     *,
     overwrite: bool = False,
-    manifest_json_path: Optional[Union[Path, str]] = None,
     manifest_csv_path: Optional[Union[Path, str]] = None,
 ) -> List[ManifestEntry]:
     output_dir = Path(output_dir)
@@ -167,15 +211,13 @@ def download_recordings(
     entries: List[ManifestEntry] = []
     for recording in recordings:
         local_path = download_recording(recording, output_dir, overwrite=overwrite)
-        file_url = str(recording.get("file") or "")
+        file_url = str(recording.get("file") or "").strip()
         if file_url.startswith("//"):
             file_url = f"https:{file_url}"
         elif file_url.startswith("/"):
             file_url = f"https://xeno-canto.org{file_url}"
         entries.append(_manifest_entry(recording, local_path, file_url))
 
-    if manifest_json_path:
-        _write_manifest_json(entries, manifest_json_path)
     if manifest_csv_path:
         _write_manifest_csv(entries, manifest_csv_path)
 

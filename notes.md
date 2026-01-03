@@ -40,3 +40,9 @@
 - The ESP32 microphone stuff will be useful for my project. I can do the same thing with the ESP32 I stole from ISE.
 - Take a look at BirdNetLite
 - Does not mention data much
+
+
+# Picking CSV data
+- I want to store basic info about each recording in a csv file, so like sci name, id, file location, xeno canto url.
+- I also want to store filtering information (e.g. country, also, animal seen)
+- I am going to store date/time of recording and maybe try encode it into predictions. It would be big help if one of the hardware units could encode the date and time into the data to predict, because some birds only visit ireland in the winter, or sing in certain months. 

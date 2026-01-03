@@ -1,0 +1,3 @@
+xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,method,animal_seen,also,sampling_rate,xc_url,file_url,local_path
+1067617,Turdus merula,Common Blackbird,Amselforscher,Germany,2016-03-24,06:09,50,A,song,field recording,yes,"[""Turdus philomelos"", ""Prunella modularis""]",44100,https://xeno-canto.org/1067617,https://xeno-canto.org/1067617/download,bird_data\raw\turdus_merula\XC1067617.mp3
+1066172,Turdus merula,Common Blackbird,Amselforscher,Germany,2016-02-24,18:28,52,A,song,field recording,yes,"[""Turdus merula"", ""Erithacus rubecula""]",44100,https://xeno-canto.org/1066172,https://xeno-canto.org/1066172/download,bird_data\raw\turdus_merula\XC1066172.mp3

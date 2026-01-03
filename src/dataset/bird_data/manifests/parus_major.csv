@@ -1,0 +1,3 @@
+xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,method,animal_seen,also,sampling_rate,xc_url,file_url,local_path
+1049551,Parus major,Great Tit,Beatrix Saadi-Varchmin,Germany,2015-10-13,17:37,56,A,"call, social calls",field recording,yes,[],44100,https://xeno-canto.org/1049551,https://xeno-canto.org/1049551/download,bird_data\raw\parus_major\XC1049551.wav
+1048483,Parus major,Great Tit,Miika Silfverberg,Finland,2025-10-18,11:21,27,A,call,field recording,yes,"[""Dendrocopos major"", ""Garrulus glandarius""]",48000,https://xeno-canto.org/1048483,https://xeno-canto.org/1048483/download,bird_data\raw\parus_major\XC1048483.mp3
