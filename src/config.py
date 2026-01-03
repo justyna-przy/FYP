@@ -4,9 +4,11 @@ from typing import List
 
 @dataclass(frozen=True)
 class PathsConfig:
-    root: str = "bird_data"
+    data_dir: str = "bird_data"
     raw_dir: str = "raw"
     clips_dir: str = "clips"
+    manifests_dir: str = "manifests"
+
 
 
 @dataclass(frozen=True)
