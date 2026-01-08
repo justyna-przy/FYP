@@ -16,3 +16,4 @@ build/
 *.tmp
 *.out
 coverage
+raw/
