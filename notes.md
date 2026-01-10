@@ -46,3 +46,6 @@
 - I want to store basic info about each recording in a csv file, so like sci name, id, file location, xeno canto url.
 - I also want to store filtering information (e.g. country, also, animal seen)
 - I am going to store date/time of recording and maybe try encode it into predictions. It would be big help if one of the hardware units could encode the date and time into the data to predict, because some birds only visit ireland in the winter, or sing in certain months. 
+
+- C:\Users\shado\Year3Projects\FYP\src\dataset\bird_data\clips_v1\species\corvus_corax\XC1027629__s27000__e30000.wav you can hear the wings flapping
+- C:\Users\shado\Year3Projects\FYP\src\dataset\bird_data\clips\non_bird\apus_apus\XC1059011__s1000__e4000.wav Caught a goddamn sheep
