@@ -72,3 +72,5 @@ Failed phylloscopus collybita: 500 Server Error: Internal Server Error for url: 
 
 82 / 250
 Failed sylvia atricapilla: 404 Client Error: Not Found for url: https://xeno-canto.org/1054532/download
+
+BirdNet uses a diff scientific name for Jackdaw than xeno canto
