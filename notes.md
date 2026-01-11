@@ -49,3 +49,26 @@
 
 - C:\Users\shado\Year3Projects\FYP\src\dataset\bird_data\clips_v1\species\corvus_corax\XC1027629__s27000__e30000.wav you can hear the wings flapping
 - C:\Users\shado\Year3Projects\FYP\src\dataset\bird_data\clips\non_bird\apus_apus\XC1059011__s1000__e4000.wav Caught a goddamn sheep
+
+
+
+=== Downloading pica pica ===
+1 / 250
+2 / 250
+3 / 250
+4 / 250
+5 / 250
+6 / 250
+7 / 250
+8 / 250
+9 / 250
+10 / 250
+Failed pica pica: HTTPSConnectionPool(host='xeno-canto.org', port=443): Max retries exceeded with url: /767200/download (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000002229FD5F0D0>, 'Connection to xeno-canto.org timed out. (connect timeout=60)'))
+
+
+143 / 250
+Failed phylloscopus collybita: 500 Server Error: Internal Server Error for url: https://xeno-canto.org/684749/download
+
+
+82 / 250
+Failed sylvia atricapilla: 404 Client Error: Not Found for url: https://xeno-canto.org/1054532/download
