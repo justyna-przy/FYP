@@ -4,7 +4,7 @@ from typing import List, Tuple
 
 @dataclass(frozen=True)
 class PathsConfig:
-    data_dir: str = "bird_data"
+    data_dir: str = "src/dataset/bird_data"
     raw_dir: str = "raw"
     clips_dir: str = "clips"
     manifests_dir: str = "manifests"

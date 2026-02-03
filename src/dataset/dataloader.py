@@ -64,12 +64,14 @@ class SpectrogramPNGs(Dataset):
         png_col: str = "train_png",
         class_col: str = "class_name",
         transform: Optional[Callable[[torch.Tensor], torch.Tensor]] = None,
+        base_dir: Optional[str | Path] = None,
     ):
         self.df = df.reset_index(drop=True)
         self.class_to_idx = class_to_idx
         self.png_col = png_col
         self.class_col = class_col
         self.transform = transform
+        self.base_dir = Path(base_dir).resolve() if base_dir is not None else None
 
         missing = {png_col, class_col} - set(self.df.columns)
         if missing:
@@ -78,9 +80,27 @@ class SpectrogramPNGs(Dataset):
     def __len__(self) -> int:
         return len(self.df)
 
+    def _resolve_path(self, p: Path) -> Path:
+        if p.exists():
+            return p
+        if self.base_dir is None or p.is_absolute():
+            return p
+
+        parts = p.parts
+        if parts and parts[0] == self.base_dir.name:
+            candidate = self.base_dir / Path(*parts[1:])
+            if candidate.exists():
+                return candidate
+
+        candidate = self.base_dir / p
+        if candidate.exists():
+            return candidate
+
+        return p
+
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
         r = self.df.iloc[idx]
-        png_path = Path(str(r[self.png_col]))
+        png_path = self._resolve_path(Path(str(r[self.png_col])))
         cls = str(r[self.class_col])
 
         # Load grayscale PNG -> float32 [0,1]
@@ -157,6 +177,7 @@ def make_dataloaders(
     classes_json: str | Path,
     loader_cfg: Optional[LoaderConfig] = None,
     aug_cfg: Optional[AugmentConfig] = None,
+    data_dir: Optional[str | Path] = None,
     seed: int = 22,
 ) -> Dict[str, DataLoader]:
     """
@@ -172,9 +193,13 @@ def make_dataloaders(
     train_tf = make_transforms(train=True, seed=seed, aug=aug_cfg)
     eval_tf = make_transforms(train=False, seed=seed, aug=aug_cfg)
 
-    train_ds = SpectrogramPNGs(train_df, class_to_idx, transform=train_tf)
-    val_ds = SpectrogramPNGs(val_df, class_to_idx, transform=eval_tf)
-    test_ds = SpectrogramPNGs(test_df, class_to_idx, transform=eval_tf) if test_df is not None else None
+    train_ds = SpectrogramPNGs(train_df, class_to_idx, transform=train_tf, base_dir=data_dir)
+    val_ds = SpectrogramPNGs(val_df, class_to_idx, transform=eval_tf, base_dir=data_dir)
+    test_ds = (
+        SpectrogramPNGs(test_df, class_to_idx, transform=eval_tf, base_dir=data_dir)
+        if test_df is not None
+        else None
+    )
 
     train_loader = DataLoader(
         train_ds,
