@@ -74,3 +74,26 @@ Failed phylloscopus collybita: 500 Server Error: Internal Server Error for url: 
 Failed sylvia atricapilla: 404 Client Error: Not Found for url: https://xeno-canto.org/1054532/download
 
 BirdNet uses a diff scientific name for Jackdaw than xeno canto
+
+
+
+
+
+Meeting Agenda
+- Last time had data exploration (stats) finished
+- Over Christmas aimed to get first model attempt finished
+- Completed:
+    - Data gathering, help model generalise, ensured good quality audio
+    - Fixed size clipping script, used birdnet api to verify high energy segments matched labelled species
+    - Added non-bird class
+    - Finalised on device flow while designing the data
+    - Researched spectrograms and the Max78000
+    - Current spectrograms are quite small, might have to move to max78002 later
+    - Now I need to design model (probably ResNet) and train on cloud
+
+TODO
+- Train model
+- Measure accuracies
+- Repeat until i get good model
+
+
