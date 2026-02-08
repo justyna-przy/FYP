@@ -1,47 +1,10 @@
-"""
-Training script for the BirdResNet model
-======================================
-
-This script trains the BirdResNet convolutional neural network on the
-spectrogram dataset created for bird‑call classification.  It uses the
-precomputed splits and dataloaders provided in the ``src.dataset`` package
-and leverages class weighting to mitigate class imbalance.  The model
-architecture is defined in ``src.models.bird_resnet``.
-
-Usage
------
-Run this module as a script from the project root (where ``src`` is
-importable) after generating the spectrograms and splits.  For example:
-
-.. code:: bash
-
-    python -m src.train_bird_resnet \
-        --epochs 50 \
-        --lr 1e-3 \
-        --batch-size 64 \
-        --out-dir runs/bird_resnet_v1
-
-The script will load the dataset from ``bird_data/spectrograms_v1``
-according to the paths defined in ``src.config.CONFIG``, create
-dataloaders, instantiate the model, compute class weights, and train
-using the Adam optimizer.  It reports loss, accuracy, and macro F1
-score for both training and validation sets and saves the best model
-checkpoint to the specified output directory.
-
-Notes
------
-* Augmentation is currently disabled; training uses raw spectrograms.
-* The model is designed to be compatible with the MAX78002’s memory
-  constraints, containing approximately 1.2 million parameters by
-  default【387769142224068†L14-L19】.
-"""
-
 import argparse
 import json
 from pathlib import Path
 from typing import Dict, Tuple
 
 import numpy as np
+import pandas as pd 
 import torch
 import torch.nn.functional as F
 
@@ -52,19 +15,6 @@ from src.models.bird_resnet import BirdResNet
 
 
 def compute_class_weights(train_csv: Path, classes_json: Path, device: torch.device) -> torch.Tensor:
-    """Compute inverse‑frequency class weights for cross‑entropy loss.
-
-    Args:
-        train_csv: CSV file containing training data with a ``class_name`` column.
-        classes_json: JSON mapping class names to indices.
-        device: Target device to place the weights.
-
-    Returns:
-        A 1D float tensor of size (num_classes,) with weights
-        normalized to have mean 1.
-    """
-    import pandas as pd  # Local import to avoid mandatory dependency for users not training
-
     df = pd.read_csv(train_csv)
     class_to_idx: Dict[str, int] = json.loads(classes_json.read_text(encoding="utf-8"))
 
@@ -86,11 +36,6 @@ def train_one_epoch(model: BirdResNet,
                     optimizer: torch.optim.Optimizer,
                     class_weights: torch.Tensor,
                     device: torch.device) -> Tuple[float, float, float]:
-    """Run one epoch of training.
-
-    Returns:
-        A tuple of (loss_mean, accuracy, macro_f1).
-    """
     model.train()
     losses = []
     all_preds = []
@@ -123,7 +68,6 @@ def evaluate(model: BirdResNet,
              dataloader: torch.utils.data.DataLoader,
              class_weights: torch.Tensor,
              device: torch.device) -> Tuple[float, float, float]:
-    """Evaluate the model on a validation or test set."""
     model.eval()
     losses = []
     all_preds = []
