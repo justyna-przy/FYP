@@ -1,4 +1,5 @@
 xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,method,animal_seen,also,sampling_rate,xc_url,file_url,local_path
+1071299,Accipiter nisus,Eurasian Sparrowhawk,Denis Dujardin,France,2026-01-06,11:30,5,A,call,field recording,no,[],48000,https://xeno-canto.org/1071299,https://xeno-canto.org/1071299/download,
 1053258,Accipiter nisus,Eurasian Sparrowhawk,Denis Dujardin,France,2025-09-14,10:00,11,A,call,field recording,yes,[],48000,https://xeno-canto.org/1053258,https://xeno-canto.org/1053258/download,
 1044180,Accipiter nisus,Eurasian Sparrowhawk,Denis Dujardin,France,2025-07-14,10:58,17,A,begging call,field recording,yes,[],48000,https://xeno-canto.org/1044180,https://xeno-canto.org/1044180/download,
 1041153,Accipiter nisus,Eurasian Sparrowhawk,Sonothèque ADVL,France,2025-08-21,08:30,19,A,call,field recording,yes,[],24000,https://xeno-canto.org/1041153,https://xeno-canto.org/1041153/download,
@@ -51,6 +52,8 @@ xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,met
 143335,Accipiter nisus,Eurasian Sparrowhawk,Piotr Szczypinski,Poland,2013-07-24,17:30,11,A,"begging call, call",field recording,yes,[],48000,https://xeno-canto.org/143335,https://xeno-canto.org/143335/download,
 143334,Accipiter nisus,Eurasian Sparrowhawk,Piotr Szczypinski,Poland,2013-07-24,17:30,54,A,"begging call, call",field recording,yes,"[""Accipiter nisus""]",24000,https://xeno-canto.org/143334,https://xeno-canto.org/143334/download,
 105815,Accipiter nisus,Eurasian Sparrowhawk,Francesco Sottile,Italy,2010-07-21,09:14,14,A,begging call,field recording,no,[],44100,https://xeno-canto.org/105815,https://xeno-canto.org/105815/download,
+1078994,Accipiter nisus,Eurasian Sparrowhawk,Olivier SWIFT,France,2025-03-31,08:30,3,B,call,field recording,no,[],32000,https://xeno-canto.org/1078994,https://xeno-canto.org/1078994/download,
+1078993,Accipiter nisus,Eurasian Sparrowhawk,Olivier SWIFT,France,2025-03-30,06:30,3,B,call,field recording,no,[],32000,https://xeno-canto.org/1078993,https://xeno-canto.org/1078993/download,
 1052499,Accipiter nisus,Eurasian Sparrowhawk,Grzegorz Lorek,Poland,2025-07-18,17:00,12,B,begging call,field recording,yes,[],48000,https://xeno-canto.org/1052499,https://xeno-canto.org/1052499/download,
 1032480,Accipiter nisus,Eurasian Sparrowhawk,GRAND Brigitte,France,2025-08-23,19:00,11,B,begging call,field recording,yes,[],44100,https://xeno-canto.org/1032480,https://xeno-canto.org/1032480/download,
 1032291,Accipiter nisus,Eurasian Sparrowhawk,Niels Kristian Bech Jensen,Denmark,2025-08-24,06:55,32,B,begging call,field recording,no,[],44100,https://xeno-canto.org/1032291,https://xeno-canto.org/1032291/download,

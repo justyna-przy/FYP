@@ -1,4 +1,7 @@
 xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,method,animal_seen,also,sampling_rate,xc_url,file_url,local_path
+1079106,Emberiza schoeniclus,Common Reed Bunting,Adrien Peillon,France,2025-05-29,10:07,11,A,song,field recording,yes,[],48000,https://xeno-canto.org/1079106,https://xeno-canto.org/1079106/download,
+1079104,Emberiza schoeniclus,Common Reed Bunting,Adrien Peillon,France,2025-12-07,11:29,16,A,call,field recording,no,[],48000,https://xeno-canto.org/1079104,https://xeno-canto.org/1079104/download,
+1079103,Emberiza schoeniclus,Common Reed Bunting,Adrien Peillon,France,2025-12-04,08:50,3,A,call,field recording,no,[],48000,https://xeno-canto.org/1079103,https://xeno-canto.org/1079103/download,
 991853,Emberiza schoeniclus,Common Reed Bunting,Lars Edenius,Sweden,2025-04-26,06:00,33,A,song,field recording,yes,"[""Turdus iliacus"", ""Turdus philomelos"", ""Bucephala clangula""]",48000,https://xeno-canto.org/991853,https://xeno-canto.org/991853/download,
 941989,Emberiza schoeniclus,Common Reed Bunting,Ulf Elman,Sweden,2018-04-13,07:04,17,A,"call, song",field recording,unknown,[],48000,https://xeno-canto.org/941989,https://xeno-canto.org/941989/download,
 932208,Emberiza schoeniclus,Common Reed Bunting,Lars Edenius,Sweden,2024-09-05,09:00,24,A,call,field recording,no,[],48000,https://xeno-canto.org/932208,https://xeno-canto.org/932208/download,
@@ -81,6 +84,7 @@ xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,met
 42600,Emberiza schoeniclus,Common Reed Bunting,Patrik Åberg,Sweden,2009-04-23,?,25,A,call,field recording,unknown,"[""Columba palumbus"", ""Anas platyrhynchos""]",44100,https://xeno-canto.org/42600,https://xeno-canto.org/42600/download,
 27600,Emberiza schoeniclus,Common Reed Bunting,Patrik Åberg,Sweden,2007-05-13,?,39,A,song,field recording,unknown,[],44100,https://xeno-canto.org/27600,https://xeno-canto.org/27600/download,
 27599,Emberiza schoeniclus,Common Reed Bunting,Patrik Åberg,Sweden,2006-06-24,?,42,A,song,field recording,unknown,[],44100,https://xeno-canto.org/27599,https://xeno-canto.org/27599/download,
+1074958,Emberiza schoeniclus,Common Reed Bunting,Pere Josa,Spain,2026-01-16,09:00,13,B,call,field recording,no,[],44100,https://xeno-canto.org/1074958,https://xeno-canto.org/1074958/download,
 1065601,Emberiza schoeniclus,Common Reed Bunting,João Tomás,Portugal,2025-12-17,7:54,10,B,call,field recording,no,"[""Estrilda astrild""]",44100,https://xeno-canto.org/1065601,https://xeno-canto.org/1065601/download,
 1063378,Emberiza schoeniclus,Common Reed Bunting,Jordi Calvet,Spain,2025-11-27,07:30,5,B,"call, flight call",field recording,yes,[],48000,https://xeno-canto.org/1063378,https://xeno-canto.org/1063378/download,
 1063377,Emberiza schoeniclus,Common Reed Bunting,Jordi Calvet,Spain,2025-11-27,07:30,17,B,call,field recording,yes,[],48000,https://xeno-canto.org/1063377,https://xeno-canto.org/1063377/download,
@@ -103,7 +107,6 @@ xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,met
 1046942,Emberiza schoeniclus,Common Reed Bunting,Tobias Larsson,Sweden,2025-10-10,09:00,4,B,call,field recording,no,[],44100,https://xeno-canto.org/1046942,https://xeno-canto.org/1046942/download,
 1045209,Emberiza schoeniclus,Common Reed Bunting,Karol Łanocha,Poland,2025-10-03,14:09,4,B,call,field recording,no,[],44100,https://xeno-canto.org/1045209,https://xeno-canto.org/1045209/download,
 1044958,Emberiza schoeniclus,Common Reed Bunting,Camille Vacher,France,2025-09-28,08:51,12,B,call,field recording,yes,"[""Coloeus monedula"", ""Pica pica"", ""Psittacula krameri""]",44100,https://xeno-canto.org/1044958,https://xeno-canto.org/1044958/download,
-1043270,Emberiza schoeniclus,Common Reed Bunting,Urban Lundström,Sweden,2025-09-26,16:40,9,B,call,field recording,yes,"[""Phylloscopus collybita""]",44100,https://xeno-canto.org/1043270,https://xeno-canto.org/1043270/download,
 1041732,Emberiza schoeniclus,Common Reed Bunting,David Darrell-Lambert,United Kingdom,2025-09-19,18:00,7,B,call,field recording,yes,[],48000,https://xeno-canto.org/1041732,https://xeno-canto.org/1041732/download,
 1041731,Emberiza schoeniclus,Common Reed Bunting,David Darrell-Lambert,United Kingdom,2025-09-19,18:00,4,B,call,field recording,yes,[],48000,https://xeno-canto.org/1041731,https://xeno-canto.org/1041731/download,
 1041133,Emberiza schoeniclus,Common Reed Bunting,Sonothèque ADVL,France,2025-08-06,07:00,15,B,"aberrant, call",field recording,yes,[],24000,https://xeno-canto.org/1041133,https://xeno-canto.org/1041133/download,

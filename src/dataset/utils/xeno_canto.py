@@ -13,8 +13,8 @@ import requests
 from src.config import CONFIG
 
 
-load_dotenv()
-XENO_CANTO_API_KEY = os.environ.get("XENO_CANTO_API_KEY")
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+load_dotenv(dotenv_path=PROJECT_ROOT / ".env")
 
 Recording = Dict[str, Any]
 ManifestEntry = Dict[str, Any]
@@ -59,10 +59,19 @@ def _get_with_retry(url: str, params: Dict[str, Any], max_retries: int = 3, time
     raise last_exception or RuntimeError("Unknown Xeno-canto API error.")
 
 
+def _get_api_key() -> Optional[str]:
+    key = os.environ.get("XENO_CANTO_API_KEY")
+    if key is None:
+        return None
+    key = key.strip()
+    return key or None
+
+
 def fetch_recordings(query: str, per_page: int = 500,) -> List[Recording]:
     """Fetch all recordings matching a Xeno-canto query"""
     
     query = query.replace("+", " ")
+    api_key = _get_api_key()
 
     all_recordings: List[Recording] = []
     page = 1
@@ -72,9 +81,22 @@ def fetch_recordings(query: str, per_page: int = 500,) -> List[Recording]:
             "query": query,
             "page": page,
             "per_page": per_page,
-            "key": XENO_CANTO_API_KEY,
         }
-        data = _get_with_retry(CONFIG.xeno_canto.base_url, params)
+        if api_key:
+            params["key"] = api_key
+
+        try:
+            data = _get_with_retry(CONFIG.xeno_canto.base_url, params)
+        except requests.HTTPError as exc:
+            # If an API key is invalid, the endpoint can return 401.
+            # Retry once without a key so notebook runs still work.
+            status_code = exc.response.status_code if exc.response is not None else None
+            if status_code == 401 and "key" in params:
+                params.pop("key", None)
+                data = _get_with_retry(CONFIG.xeno_canto.base_url, params)
+            else:
+                raise
+
         recs = data.get("recordings", []) or []
         all_recordings.extend(recs)
 

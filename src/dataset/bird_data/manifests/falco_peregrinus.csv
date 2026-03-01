@@ -1,4 +1,5 @@
 xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,method,animal_seen,also,sampling_rate,xc_url,file_url,local_path
+1073395,Falco peregrinus,Peregrine Falcon,Jessica Peruzzo,Italy,2026-01-18,11:30,22,A,call,field recording,yes,[],48000,https://xeno-canto.org/1073395,https://xeno-canto.org/1073395/download,
 1059390,Falco peregrinus,Peregrine Falcon,Denis Dujardin,France,2025-11-23,10:30,19,A,alarm call,field recording,no,"[""Corvus corone""]",48000,https://xeno-canto.org/1059390,https://xeno-canto.org/1059390/download,
 1055457,Falco peregrinus,Peregrine Falcon,Stanislas Wroza,France,2025-10-14,17:54,19,A,"call, flight call, attack",field recording,unknown,[],44100,https://xeno-canto.org/1055457,https://xeno-canto.org/1055457/download,
 1052542,Falco peregrinus,Peregrine Falcon,Van Herrewege Alex,Belgium,2025-11-04,23:09,8,A,call,field recording,no,[],192000,https://xeno-canto.org/1052542,https://xeno-canto.org/1052542/download,
@@ -100,6 +101,7 @@ xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,met
 35979,Falco peregrinus,Peregrine Falcon,Tomas Belka,Poland,2009-06-15,19:35,22,A,alarm call,field recording,unknown,[],48000,https://xeno-canto.org/35979,https://xeno-canto.org/35979/download,
 35976,Falco peregrinus,Peregrine Falcon,Tomas Belka,Poland,2009-06-15,19:35,10,A,alarm call,field recording,unknown,[],48000,https://xeno-canto.org/35976,https://xeno-canto.org/35976/download,
 35917,Falco peregrinus,Peregrine Falcon,Tomas Belka,Poland,2009-06-15,20:00,15,A,alarm call,field recording,unknown,[],48000,https://xeno-canto.org/35917,https://xeno-canto.org/35917/download,
+1076762,Falco peregrinus,Peregrine Falcon,WINDELS Martin,Belgium,2025-05-08,17:30,47,B,alarm call,field recording,yes,[],44100,https://xeno-canto.org/1076762,https://xeno-canto.org/1076762/download,
 1055676,Falco peregrinus,Peregrine Falcon,Stanislas Wroza,France,2025-10-15,11:25,9,B,call,field recording,unknown,[],44100,https://xeno-canto.org/1055676,https://xeno-canto.org/1055676/download,
 1055626,Falco peregrinus,Peregrine Falcon,Stanislas Wroza,France,2025-10-08,8:39,7,B,song,field recording,unknown,[],44100,https://xeno-canto.org/1055626,https://xeno-canto.org/1055626/download,
 1055610,Falco peregrinus,Peregrine Falcon,Stanislas Wroza,France,2025-10-01,13:40,9,B,flight call,field recording,unknown,[],44100,https://xeno-canto.org/1055610,https://xeno-canto.org/1055610/download,

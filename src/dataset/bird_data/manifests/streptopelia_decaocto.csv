@@ -1,4 +1,5 @@
 xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,method,animal_seen,also,sampling_rate,xc_url,file_url,local_path
+1078790,Streptopelia decaocto,Eurasian Collared Dove,Filippo Ceccolini,Italy,2026-02-09,07:45,9,A,song,field recording,yes,[],48000,https://xeno-canto.org/1078790,https://xeno-canto.org/1078790/download,
 1062732,Streptopelia decaocto,Eurasian Collared Dove,Lionel Triboulin,France,2025-12-05,08:30,8,A,song,field recording,yes,[],44100,https://xeno-canto.org/1062732,https://xeno-canto.org/1062732/download,
 1062731,Streptopelia decaocto,Eurasian Collared Dove,Lionel Triboulin,France,2025-12-05,08:30,7,A,song,field recording,yes,[],44100,https://xeno-canto.org/1062731,https://xeno-canto.org/1062731/download,
 1062559,Streptopelia decaocto,Eurasian Collared Dove,Esperanza Poveda,Spain,2025-09-20,?,5,A,flight call,field recording,no,[],44100,https://xeno-canto.org/1062559,https://xeno-canto.org/1062559/download,
@@ -237,6 +238,7 @@ xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,met
 101941,Streptopelia decaocto,Eurasian Collared Dove,Richard Dunn,United Kingdom,2012-05-22,10:00,22,A,song,field recording,unknown,[],44100,https://xeno-canto.org/101941,https://xeno-canto.org/101941/download,
 88219,Streptopelia decaocto,Eurasian Collared Dove,Jordi Calvet,Spain,2011-09-04,09:26,10,A,song,field recording,unknown,[],48000,https://xeno-canto.org/88219,https://xeno-canto.org/88219/download,
 77971,Streptopelia decaocto,Eurasian Collared Dove,Volker Arnold,Germany,2008-05-29,7.42,52,A,song,field recording,unknown,"[""Turdus merula"", ""Pica pica"", ""Picus viridis""]",44100,https://xeno-canto.org/77971,https://xeno-canto.org/77971/download,
+1073046,Streptopelia decaocto,Eurasian Collared Dove,Andrew Harrop,United Kingdom,2026-01-16,10:00,12,B,song,field recording,yes,[],44100,https://xeno-canto.org/1073046,https://xeno-canto.org/1073046/download,
 1051370,Streptopelia decaocto,Eurasian Collared Dove,Jorge Valella Robledo,Spain,2025-05-08,08:30,45,B,song,field recording,no,"[""Sturnus unicolor""]",44100,https://xeno-canto.org/1051370,https://xeno-canto.org/1051370/download,
 1049165,Streptopelia decaocto,Eurasian Collared Dove,Karol Łanocha,Poland,2025-10-21,16:21,11,B,song,field recording,yes,"[""Parus major""]",44100,https://xeno-canto.org/1049165,https://xeno-canto.org/1049165/download,
 1048304,Streptopelia decaocto,Eurasian Collared Dove,Nelson Conceição,Portugal,2025-10-10,19:03,8,B,song,field recording,yes,[],48000,https://xeno-canto.org/1048304,https://xeno-canto.org/1048304/download,

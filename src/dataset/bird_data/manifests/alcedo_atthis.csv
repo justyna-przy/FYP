@@ -1,4 +1,6 @@
 xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,method,animal_seen,also,sampling_rate,xc_url,file_url,local_path
+1074728,Alcedo atthis,Common Kingfisher,Pere Josa,Spain,2026-01-15,09:30,19,A,call,field recording,no,[],44100,https://xeno-canto.org/1074728,https://xeno-canto.org/1074728/download,
+1074726,Alcedo atthis,Common Kingfisher,Pere Josa,Spain,2026-01-15,09:30,2,A,flight call,field recording,no,[],44100,https://xeno-canto.org/1074726,https://xeno-canto.org/1074726/download,
 1068235,Alcedo atthis,Common Kingfisher,Denis Dujardin,France,2025-12-23,15:00,3,A,flight call,field recording,yes,[],48000,https://xeno-canto.org/1068235,https://xeno-canto.org/1068235/download,
 1068234,Alcedo atthis,Common Kingfisher,Denis Dujardin,France,2025-12-23,15:00,5,A,flight call,field recording,yes,[],48000,https://xeno-canto.org/1068234,https://xeno-canto.org/1068234/download,
 1063169,Alcedo atthis,Common Kingfisher,Pere Josa,Spain,2025-09-23,08:00,9,A,call,field recording,no,[],44100,https://xeno-canto.org/1063169,https://xeno-canto.org/1063169/download,
@@ -283,6 +285,8 @@ xc_id,sci_name,common_name,recordist,country,date,time,length_s,quality,type,met
 54112,Alcedo atthis,Common Kingfisher,Marco Dragonetti,Italy,2006-10-28,06:00,7,A,flight call,field recording,unknown,[],48000,https://xeno-canto.org/54112,https://xeno-canto.org/54112/download,
 41051,Alcedo atthis,Common Kingfisher,Jarek Matusiak,Poland,2009-07-21,15:20,15,A,call,field recording,unknown,[],44100,https://xeno-canto.org/41051,https://xeno-canto.org/41051/download,
 27038,Alcedo atthis,Common Kingfisher,Patrik Åberg,Sweden,2008-06-08,?,38,A,call,field recording,unknown,[],44100,https://xeno-canto.org/27038,https://xeno-canto.org/27038/download,
+1075627,Alcedo atthis,Common Kingfisher,Esperanza Poveda,Spain,2025-05-23,?,14,B,flight call,field recording,no,[],44100,https://xeno-canto.org/1075627,https://xeno-canto.org/1075627/download,
+1074107,Alcedo atthis,Common Kingfisher,bert de bruin,Norway,2026-01-23,13:00,13,B,call,field recording,yes,[],48000,https://xeno-canto.org/1074107,https://xeno-canto.org/1074107/download,
 1070048,Alcedo atthis,Common Kingfisher,Nelson Conceição,Portugal,2025-11-25,18:41,3,B,call,field recording,yes,[],48000,https://xeno-canto.org/1070048,https://xeno-canto.org/1070048/download,
 1070047,Alcedo atthis,Common Kingfisher,Nelson Conceição,Portugal,2025-11-25,18:36,3,B,flight call,field recording,yes,[],48000,https://xeno-canto.org/1070047,https://xeno-canto.org/1070047/download,
 1063790,Alcedo atthis,Common Kingfisher,Nelson Conceição,Portugal,2025-10-11,19:13,9,B,flight call,field recording,yes,"[""Anas platyrhynchos""]",48000,https://xeno-canto.org/1063790,https://xeno-canto.org/1063790/download,
