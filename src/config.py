@@ -34,10 +34,6 @@ class PreprocessingConfig:
     stride_s: float = 3.0
     skip_first_s: float = 1.0 # skip initial silence
 
-    # Recording cap
-    recording_cap_s: float = 30.0
-    step_cap_s: float = 5.0
-
     # RMS gating
     rms_keep_percentile: float = 30.0
     rms_abs_min_db: float = -40.0
