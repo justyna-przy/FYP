@@ -13,7 +13,7 @@ class PathsConfig:
 @dataclass(frozen=True)
 class XenoCantoConfig:
     base_url: str = "https://xeno-canto.org/api/3/recordings"
-    quality: List[str] = field(default_factory=lambda: ["A", "B"])
+    quality: List[str] = field(default_factory=lambda: ["A", "B", "C"])
     min_len: int = 2
     max_len: int = 60
     countries: List[str] = field(

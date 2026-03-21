@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union, Iterable
+from typing import Any, Dict, List, Optional, Union
 import csv
 import json
 import os
@@ -197,12 +197,16 @@ def read_manifest_csv(path: Union[Path, str]) -> List[ManifestEntry]:
 def filter_recordings_to_config(recordings: List[Recording]) -> List[Recording]:
     xc = CONFIG.xeno_canto
     allowed_countries = set(xc.countries)
+    allowed_qualities = {str(q).strip().upper() for q in xc.quality if str(q).strip()}
 
     out: List[Recording] = []
     for r in recordings:
         country = (r.get("cnt") or "").strip()
+        quality = (r.get("q") or "").strip().upper()
 
         if country and country not in allowed_countries:
+            continue
+        if allowed_qualities and quality not in allowed_qualities:
             continue
 
         out.append(r)
@@ -215,8 +219,20 @@ def write_raw_manifest_for_species(sci_name: str, query: str, manifest_dir: Unio
     
     recs = fetch_recordings(query, per_page=per_page)
     recs = filter_recordings_to_config(recs)
-    
-    entries = [recording_to_manifest_entry(r, local_path="") for r in recs]
+
+    entries: List[ManifestEntry] = []
+    skipped_invalid = 0
+    for r in recs:
+        try:
+            entries.append(recording_to_manifest_entry(r, local_path=""))
+        except ValueError as exc:
+            skipped_invalid += 1
+            rec_id = str(r.get("id") or "<missing_id>")
+            print(f"Skipping malformed recording id={rec_id}: {exc}")
+
+    if skipped_invalid:
+        print(f"Skipped {skipped_invalid} malformed recording rows for {sci_name}")
+
     out_path = manifest_path(manifest_dir, sci_name)  # no suffix = raw
     write_manifest_csv(entries, out_path)
     return out_path
