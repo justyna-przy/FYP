@@ -228,6 +228,17 @@ def download_manifest_entry(entry: ManifestEntry, output_dir: Union[Path, str], 
 
     xc_id = str(entry.get("xc_id") or "").strip()
     file_url = str(entry.get("file_url") or "").strip()
+    if file_url.startswith("//"):
+        file_url = f"https:{file_url}"
+        entry["file_url"] = file_url
+
+    if not xc_id:
+        raise ValueError("Manifest entry missing xc_id.")
+    if not file_url:
+        raise ValueError(f"Manifest entry XC{xc_id} missing file_url.")
+    if not file_url.startswith(("http://", "https://")):
+        raise ValueError(f"Manifest entry XC{xc_id} has invalid file_url: {file_url!r}")
+
     dest_path = output_dir / f"XC{xc_id}.mp3"
 
     if dest_path.exists() and not overwrite:
@@ -246,7 +257,6 @@ def download_manifest_entry(entry: ManifestEntry, output_dir: Union[Path, str], 
 
 
 def download_from_selected_manifest(sci_name: str, manifest_dir: Union[Path, str], raw_audio_dir: Union[Path, str], overwrite: bool = True) -> Path:
-    """Reads manifests/<species>_selected.csv and download into raw/<species>/"""
     
     manifest_dir = Path(manifest_dir)
     raw_audio_dir = Path(raw_audio_dir)
@@ -255,10 +265,21 @@ def download_from_selected_manifest(sci_name: str, manifest_dir: Union[Path, str
     entries = read_manifest_csv(selected_csv)
 
     species_out = raw_audio_dir / slugify_species(sci_name)
+    downloaded_ok = 0
+    skipped = 0
     for i, e in enumerate(entries, start=1):
         print(i, "/", len(entries))
-        download_manifest_entry(e, species_out, overwrite=overwrite)
+        try:
+            download_manifest_entry(e, species_out, overwrite=overwrite)
+            downloaded_ok += 1
+        except Exception as exc:
+            skipped += 1
+            e["local_path"] = ""
+            xc_id = str(e.get("xc_id") or "").strip() or "<missing_xc_id>"
+            print(f"Skipping row {i} (xc_id={xc_id}): {exc}")
+            continue
 
     downloaded_csv = manifest_path(manifest_dir, sci_name, "downloaded")
     write_manifest_csv(entries, downloaded_csv)
+    print(f"Finished {sci_name}: downloaded={downloaded_ok}, skipped={skipped}")
     return downloaded_csv
