@@ -1,12 +1,18 @@
 # src/dataset/spectrograms.py
 
-from pathlib import Path
-from typing import Optional, Tuple
+from __future__ import annotations
 
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Dict, List, Optional, Sequence, Tuple
+import random
+
+import librosa
 import numpy as np
+import pandas as pd
 import soundfile as sf
 from PIL import Image
-import librosa
+from tqdm import tqdm
 
 
 def compute_logmel_db(
@@ -126,19 +132,10 @@ def make_both_pngs(
         save_png(img_u8, out_train_png, resize_hw=cfg.train_out_shape_hw)
 
 
-# ---- Simple dataset builder (folder-walk, no manifests) ----
-
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Dict, List, Optional, Tuple
-
-import pandas as pd
-from tqdm import tqdm
-
-
 def _get_config():
     # lazy import to avoid circular imports
     from src.config import CONFIG  # type: ignore
+
     return CONFIG
 
 
@@ -153,62 +150,48 @@ def _species_dirs(root: Path) -> List[Path]:
     return sorted([p for p in root.iterdir() if p.is_dir()])
 
 
-def _stem(p: Path) -> str:
-    return p.stem
+@dataclass(frozen=True)
+class SpectrogramBuildPaths:
+    data_dir: Path
+    clips_root: Path
+    species_root: Path
+    non_bird_root: Path
+    out_root: Path
+    full_dir: Path
+    train_dir: Path
 
 
-def build_spectrogram_dataset_v1(
+def resolve_spectrogram_build_paths(
     *,
     out_name: str = "spectrograms_v1",
-    train_shape_hw: Tuple[int, int] = (64, 128),  # (H, W)
-    non_bird_cap: int = 1000,
-    seed: int = 22,
-    save_full: bool = True,
-    overwrite: bool = False,
-) -> Path:
-    """
-    Walk:
-      bird_data/clips/species/<species>/*.wav
-      bird_data/clips/non_bird/<species>/*.wav
-
-    Output:
-      bird_data/<out_name>/full/<class_name>/*.png
-      bird_data/<out_name>/train_64x128/<class_name>/*.png
-      bird_data/<out_name>/index_train_64x128.csv
-
-    Classes:
-      - each bird species is its own class_name (folder name)
-      - all non_bird clips map to class_name = "non_bird"
-
-    Global cap:
-      - sample at most `non_bird_cap` non_bird wavs across all species folders
-    """
-    import random
-
+    train_shape_hw: Tuple[int, int] = (64, 128),
+) -> SpectrogramBuildPaths:
+    """Resolve input/output directories for the spectrogram build."""
     CONFIG = _get_config()
-    if not hasattr(CONFIG, "spectrogram"):
-        raise AttributeError("CONFIG.spectrogram missing in src/config.py")
-
-    spec_cfg = CONFIG.spectrogram
-    # Use config as the single source of truth for train output size.
-    if train_shape_hw != spec_cfg.train_out_shape_hw:
-        raise ValueError(
-            f"train_shape_hw={train_shape_hw} does not match CONFIG.spectrogram.train_out_shape_hw="
-            f"{spec_cfg.train_out_shape_hw}. Update config.py or pass the matching value."
-        )
-
-    data_dir = Path(CONFIG.paths.data_dir)          # "bird_data"
-    clips_root = data_dir / CONFIG.paths.clips_dir  # "bird_data/clips"
+    data_dir = Path(CONFIG.paths.data_dir)
+    clips_root = data_dir / CONFIG.paths.clips_dir
 
     species_root = clips_root / "species"
     non_bird_root = clips_root / "non_bird"
 
     out_root = data_dir / out_name
     full_dir = out_root / "full"
-    train_dir = out_root / f"train_{spec_cfg.train_out_shape_hw[0]}x{spec_cfg.train_out_shape_hw[1]}"
+    train_dir = out_root / f"train_{train_shape_hw[0]}x{train_shape_hw[1]}"
 
-    # 1) collect species wavs
-    species_rows: List[Dict] = []
+    return SpectrogramBuildPaths(
+        data_dir=data_dir,
+        clips_root=clips_root,
+        species_root=species_root,
+        non_bird_root=non_bird_root,
+        out_root=out_root,
+        full_dir=full_dir,
+        train_dir=train_dir,
+    )
+
+
+def collect_species_clip_rows(species_root: Path) -> List[Dict[str, str]]:
+    """Collect all species wav files as index rows."""
+    species_rows: List[Dict[str, str]] = []
     for sp_dir in _species_dirs(species_root):
         sp_name = sp_dir.name
         for wav in _list_wavs(sp_dir):
@@ -219,20 +202,27 @@ def build_spectrogram_dataset_v1(
                     "source": "species",
                 }
             )
+    return species_rows
 
-    # 2) collect non_bird wavs (from all per-species subfolders)
+
+def collect_capped_non_bird_rows(
+    non_bird_root: Path,
+    *,
+    non_bird_cap: int = 1000,
+    seed: int = 22,
+) -> List[Dict[str, str]]:
+    """Collect non-bird wav files and apply a global cap across folders."""
     non_bird_wavs: List[Path] = []
     for sp_dir in _species_dirs(non_bird_root):
         non_bird_wavs.extend(_list_wavs(sp_dir))
 
-    # apply global cap
     rnd = random.Random(seed)
     if non_bird_cap <= 0:
         non_bird_wavs = []
     elif len(non_bird_wavs) > non_bird_cap:
         non_bird_wavs = rnd.sample(non_bird_wavs, non_bird_cap)
 
-    non_bird_rows = [
+    return [
         {
             "wav_path": str(w),
             "class_name": "non_bird",
@@ -241,17 +231,35 @@ def build_spectrogram_dataset_v1(
         for w in non_bird_wavs
     ]
 
-    rows = species_rows + non_bird_rows
+
+def combine_and_shuffle_clip_rows(
+    species_rows: Sequence[Dict[str, str]],
+    non_bird_rows: Sequence[Dict[str, str]],
+    *,
+    seed: int = 22,
+) -> List[Dict[str, str]]:
+    """Combine species + non-bird rows and deterministically shuffle."""
+    rows = [dict(r) for r in species_rows] + [dict(r) for r in non_bird_rows]
     if not rows:
         raise RuntimeError("No wav files found. Check bird_data/clips/ layout.")
 
-    # deterministically shuffle index
+    rnd = random.Random(seed)
     rnd.shuffle(rows)
+    return rows
 
-    # 3) build index df + output paths
-    df = pd.DataFrame(rows)
+
+def build_spectrogram_index_dataframe(
+    rows: Sequence[Dict[str, str]],
+    *,
+    full_dir: Path,
+    train_dir: Path,
+) -> pd.DataFrame:
+    """Build index dataframe and fill full/train PNG output paths."""
+    df = pd.DataFrame(list(rows))
+    if df.empty:
+        raise RuntimeError("No rows provided for spectrogram index.")
+
     df["clip_id"] = df["wav_path"].apply(lambda p: Path(p).stem)
-
     df["full_png"] = df.apply(
         lambda r: str((full_dir / r["class_name"] / f'{r["clip_id"]}.png')),
         axis=1,
@@ -260,11 +268,20 @@ def build_spectrogram_dataset_v1(
         lambda r: str((train_dir / r["class_name"] / f'{r["clip_id"]}.png')),
         axis=1,
     )
+    return df
 
-    # 4) generate pngs
+
+def generate_spectrogram_pngs_from_index(
+    index_df: pd.DataFrame,
+    *,
+    spec_cfg,
+    save_full: bool = True,
+    overwrite: bool = False,
+) -> List[Tuple[str, str]]:
+    """Generate full/train PNGs for every row in the index dataframe."""
     errors: List[Tuple[str, str]] = []
 
-    for _, r in tqdm(df.iterrows(), total=len(df), desc="Generating spectrograms"):
+    for _, r in tqdm(index_df.iterrows(), total=len(index_df), desc="Generating spectrograms"):
         wav_path = Path(r["wav_path"])
         out_full = Path(r["full_png"])
         out_train = Path(r["train_png"])
@@ -288,13 +305,23 @@ def build_spectrogram_dataset_v1(
                 out_train_png=out_train,
                 cfg=spec_cfg,
             )
-        except Exception as e:
-            errors.append((str(wav_path), str(e)))
+        except Exception as exc:
+            errors.append((str(wav_path), str(exc)))
 
-    # 5) write index + error log
+    return errors
+
+
+def write_spectrogram_index_and_errors(
+    index_df: pd.DataFrame,
+    *,
+    out_root: Path,
+    train_shape_hw: Tuple[int, int],
+    errors: Sequence[Tuple[str, str]],
+) -> Path:
+    """Write index CSV and optional error log."""
     out_root.mkdir(parents=True, exist_ok=True)
     index_csv = out_root / f"index_train_{train_shape_hw[0]}x{train_shape_hw[1]}.csv"
-    df.to_csv(index_csv, index=False)
+    index_df.to_csv(index_csv, index=False)
 
     if errors:
         err_path = out_root / "errors_spectrograms_v1.txt"
@@ -303,3 +330,10 @@ def build_spectrogram_dataset_v1(
                 f.write(f"{wav}\t{msg}\n")
 
     return index_csv
+
+
+def compute_class_counts(index_df: pd.DataFrame) -> pd.Series:
+    """Return class counts sorted descending."""
+    if "class_name" not in index_df.columns:
+        raise ValueError("Expected a class_name column in the index dataframe.")
+    return index_df["class_name"].value_counts().sort_values(ascending=False)

@@ -40,7 +40,7 @@ def resolve_preprocessing_paths(repo_root: Path) -> PreprocessingPaths:
     data_dir_candidates = [
         (repo_root / data_dir_cfg).resolve(),
         (Path.cwd() / data_dir_cfg).resolve(),
-        (repo_root / "src" / "dataset" / data_dir_cfg).resolve(),
+        (repo_root / "src" / data_dir_cfg).resolve(),
     ]
 
     data_dir = next((p for p in data_dir_candidates if p.exists()), data_dir_candidates[0])

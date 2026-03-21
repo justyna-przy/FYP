@@ -18,5 +18,4 @@ build/
 coverage
 raw/
 clips/
-spectrograms_v1/
-bird_data/
+spectrograms/
