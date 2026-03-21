@@ -214,7 +214,14 @@ def resolve_downloaded_audio_path_from_manifest(
     repo_root: Path,
     data_dir: Path,
 ) -> Path | None:
+    if local_path_value is None:
+        return None
+    if isinstance(local_path_value, float) and math.isnan(local_path_value):
+        return None
+
     raw = str(local_path_value).strip()
+    if raw.lower() in {"none", "nan", "null"}:
+        return None
     if not raw:
         return None
 
@@ -270,6 +277,32 @@ def _stable_seed_for_recording(xc_id: str, base_seed: int) -> int:
     except Exception:
         numeric_id = abs(hash(xc_id)) % (2**31)
     return int(base_seed + numeric_id)
+
+
+def compute_scaled_species_clip_cap(
+    downloaded_recordings_count: int,
+    *,
+    baseline_downloaded_count: int = 350,
+    baseline_max_species_clips_per_rec: int = 3,
+    max_scaled_species_clips_per_rec: int = 6,
+) -> int:
+    """
+    Scale per-recording species clip cap inversely with available recordings.
+
+    Behaviour:
+    - at baseline_downloaded_count (e.g. 350): returns baseline cap (e.g. 3)
+    - below baseline: increases cap proportionally
+    - above baseline: does not reduce below baseline cap
+    - always clipped to [1, max_scaled_species_clips_per_rec]
+    """
+    baseline_downloaded_count = max(1, int(baseline_downloaded_count))
+    baseline_cap = max(1, int(baseline_max_species_clips_per_rec))
+    max_cap = max(baseline_cap, int(max_scaled_species_clips_per_rec))
+
+    available = max(1, int(downloaded_recordings_count))
+    scaled_cap = math.ceil(baseline_cap * (baseline_downloaded_count / available))
+    scaled_cap = max(baseline_cap, scaled_cap)
+    return int(min(max_cap, scaled_cap))
 
 
 def select_training_windows_per_recording(

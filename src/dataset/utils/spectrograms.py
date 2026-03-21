@@ -168,7 +168,14 @@ def resolve_spectrogram_build_paths(
 ) -> SpectrogramBuildPaths:
     """Resolve input/output directories for the spectrogram build."""
     CONFIG = _get_config()
-    data_dir = Path(CONFIG.paths.data_dir)
+    data_dir_cfg = Path(CONFIG.paths.data_dir)
+    project_root = Path(__file__).resolve().parents[3]
+    data_dir_candidates = [
+        (project_root / data_dir_cfg).resolve(),
+        (Path.cwd() / data_dir_cfg).resolve(),
+        (project_root / "src" / data_dir_cfg).resolve(),
+    ]
+    data_dir = next((p for p in data_dir_candidates if p.exists()), data_dir_candidates[0])
     clips_root = data_dir / CONFIG.paths.clips_dir
 
     species_root = clips_root / "species"

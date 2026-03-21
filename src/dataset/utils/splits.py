@@ -205,8 +205,15 @@ def build_default_splits_for_spectrograms_v1() -> Dict[str, Path]:
       bird_data/spectrograms_v1/splits/
     """
     CONFIG = _get_config()
-    data_dir = Path(CONFIG.paths.data_dir)
-    spec_root = data_dir / "spectrograms_v1"
+    data_dir_cfg = Path(CONFIG.paths.data_dir)
+    project_root = Path(__file__).resolve().parents[3]
+    data_dir_candidates = [
+        (project_root / data_dir_cfg).resolve(),
+        (Path.cwd() / data_dir_cfg).resolve(),
+        (project_root / "src" / data_dir_cfg).resolve(),
+    ]
+    data_dir = next((p for p in data_dir_candidates if p.exists()), data_dir_candidates[0])
+    spec_root = data_dir / "spectrograms"
     index_csv = spec_root / "index_train_64x128.csv"
     out_dir = spec_root / "splits"
     return build_splits(index_csv, out_dir=out_dir)
