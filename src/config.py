@@ -50,8 +50,6 @@ class PreprocessingConfig:
 
 @dataclass(frozen=True)
 class SpectrogramConfig:
-    version: str = "specs_v1"
-
     sample_rate: int = 16000
 
     # STFT / Mel

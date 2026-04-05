@@ -3,7 +3,8 @@
 Generate paper-ready ablation study figures from logs/ablation_results.csv.
 
 Figures produced (both .pdf and .png):
-  1. accuracy_vs_params.{pdf,png}   — scatter: QAT acc vs params, bubble=extra_blocks
+  1. accuracy_vs_params.{pdf,png} / fig4_ablation_scatter.{pdf,png}
+     — scatter: QAT acc vs params, with DW1 as the only deployed-model callout
   2. width_ablation.{pdf,png}       — bar: W1/W2/W3/W5 QAT accuracy
   3. depth_ablation.{pdf,png}       — bar: W2/D1/D2/R1 QAT accuracy (no-residual depth)
   4. energy_tradeoff.{pdf,png}      — scatter: QAT acc vs cnn_time (only if column present)
@@ -50,6 +51,12 @@ PALETTE = {
 }
 
 
+WIDTH_SWEEP = {"W1", "W2", "W3", "W5"}
+DEPTH_SWEEP = {"D1", "D2", "DW2"}
+RESIDUAL_VARIANTS = {"R1", "W4"}
+DEPLOYED_MODEL = "DW1"
+
+
 def _pct(val):
     """Convert 0-1 float to percentage string."""
     try:
@@ -78,35 +85,73 @@ def save_fig(fig, out_dir: Path, name: str):
 # ---------------------------------------------------------------------------
 
 def fig_accuracy_vs_params(df: pd.DataFrame, out_dir: Path):
-    fig, ax = plt.subplots(figsize=(6, 4.5))
+    fig, ax = plt.subplots(figsize=(6.4, 4.5))
 
-    for _, row in df.iterrows():
-        exp_id = row["id"]
-        params = float(row["params"]) / 1e3  # K params
-        qat_acc = _parse_acc(row["qat_val_acc"])
-        if np.isnan(qat_acc):
+    group_styles = [
+        ("Width variants (W1–W5)", WIDTH_SWEEP, "o", "tab:blue", 90),
+        ("Depth variants (D1, D2, DW2)", DEPTH_SWEEP, "s", "tab:green", 90),
+        ("Residual variants (R1, W4)", RESIDUAL_VARIANTS, "^", "tab:orange", 100),
+        ("Deployed model (DW1)", {DEPLOYED_MODEL}, "*", "tab:red", 220),
+    ]
+
+    for label, ids, marker, color, size in group_styles:
+        subset = df[df["id"].isin(ids)].copy()
+        if subset.empty:
             continue
-        size = 80 + int(row["extra_blocks"]) * 60
-        color = PALETTE.get(exp_id, "#888888")
-        ax.scatter(params, qat_acc * 100, s=size, color=color,
-                   edgecolors="black", linewidths=0.5, zorder=3, alpha=0.85)
-        ax.annotate(exp_id, (params, qat_acc * 100),
-                    textcoords="offset points", xytext=(6, 2),
-                    fontsize=8, color=color)
+        x = subset["params"].astype(float) / 1e3
+        y = subset["qat_val_acc"].apply(_parse_acc) * 100
+        ax.scatter(
+            x,
+            y,
+            s=size,
+            marker=marker,
+            color=color,
+            edgecolors="black",
+            linewidths=0.6,
+            alpha=0.95,
+            label=label,
+            zorder=4 if DEPLOYED_MODEL in ids else 3,
+        )
+        for _, row in subset.iterrows():
+            exp_id = row["id"]
+            params = float(row["params"]) / 1e3
+            qat_acc = _parse_acc(row["qat_val_acc"])
+            if np.isnan(qat_acc):
+                continue
+            offset = (7, 3)
+            weight = "bold" if exp_id == DEPLOYED_MODEL else "normal"
+            ax.annotate(
+                exp_id,
+                (params, qat_acc * 100),
+                textcoords="offset points",
+                xytext=offset,
+                fontsize=8,
+                fontweight=weight,
+                color="black" if exp_id == DEPLOYED_MODEL else color,
+            )
 
-    ax.set_xlabel("Parameters (K)", fontsize=11)
-    ax.set_ylabel("QAT Val Accuracy (%)", fontsize=11)
-    ax.set_title("Accuracy vs Model Size", fontsize=12)
+    ax.set_xlabel("Parameters (thousands)", fontsize=11)
+    ax.set_ylabel("QAT Validation Accuracy (%)", fontsize=11)
+    ax.set_title("MicroBird Ablation Study: Accuracy vs. Model Size", fontsize=13, weight="bold")
     ax.xaxis.set_minor_locator(mticker.AutoMinorLocator())
+    ax.grid(True, linewidth=0.4, alpha=0.3)
 
-    # Bubble-size legend for extra_blocks
-    for eb, lbl in [(0, "0 extra blocks"), (1, "1 extra block"), (2, "2 extra blocks")]:
-        ax.scatter([], [], s=80 + eb * 60, color="grey", alpha=0.7,
-                   edgecolors="black", linewidths=0.5, label=lbl)
-    ax.legend(frameon=False, fontsize=8)
+    best_qat = df["qat_val_acc"].apply(_parse_acc).max() * 100
+    if not np.isnan(best_qat):
+        ax.axhline(best_qat, color="tab:red", linestyle="--", linewidth=1.0, alpha=0.25)
 
+    ax.legend(
+        frameon=True,
+        fontsize=8.5,
+        loc="lower right",
+        labelspacing=0.7,
+        handletextpad=0.8,
+        borderpad=0.4,
+        scatterpoints=1,
+    )
     fig.tight_layout()
     save_fig(fig, out_dir, "accuracy_vs_params")
+    save_fig(fig, out_dir, "fig4_ablation_scatter")
     plt.close(fig)
 
 

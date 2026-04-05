@@ -198,12 +198,7 @@ def build_splits(
     }
 
 
-def build_default_splits_for_spectrograms_v1() -> Dict[str, Path]:
-    """
-    Convenience wrapper using your CONFIG paths:
-      bird_data/spectrograms_v1/index_train_64x128.csv
-      bird_data/spectrograms_v1/splits/
-    """
+def build_default_splits_for_spectrograms() -> Dict[str, Path]:
     CONFIG = _get_config()
     data_dir_cfg = Path(CONFIG.paths.data_dir)
     project_root = Path(__file__).resolve().parents[3]

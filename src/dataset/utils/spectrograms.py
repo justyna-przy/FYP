@@ -163,7 +163,7 @@ class SpectrogramBuildPaths:
 
 def resolve_spectrogram_build_paths(
     *,
-    out_name: str = "spectrograms_v1",
+    out_name: str = "spectrograms",
     train_shape_hw: Tuple[int, int] = (64, 128),
 ) -> SpectrogramBuildPaths:
     """Resolve input/output directories for the spectrogram build."""
@@ -331,7 +331,7 @@ def write_spectrogram_index_and_errors(
     index_df.to_csv(index_csv, index=False)
 
     if errors:
-        err_path = out_root / "errors_spectrograms_v1.txt"
+        err_path = out_root / "errors_spectrograms.txt"
         with err_path.open("w", encoding="utf-8") as f:
             for wav, msg in errors:
                 f.write(f"{wav}\t{msg}\n")
